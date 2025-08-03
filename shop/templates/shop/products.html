@@ -1,0 +1,89 @@
+{% extends "shop/base.html" %}
+{% load static %}
+
+{% block content %}
+  <!-- 
+  - #PRODUCT
+  -->
+  <ul class="product-list">
+    
+    {% for product in products %}
+      <li class="product-item">
+        <div class="product-card" tabindex="0">
+
+          <figure class="card-banner">
+            <img src="{{ product.image.url }}" width="312" height="350" loading="lazy"
+              alt="{{ product.name }}" class="image-contain">
+              {% if product.badge %}
+                <div class="card-badge">{{ product.badge }}</div>
+              {% endif %}
+
+            <ul class="card-action-list">
+              <li class="card-action-item">
+                <a href="{% url 'add_to_cart' product.id %}" class="card-action-btn">
+                  <ion-icon name="cart-outline"></ion-icon>
+                </a>
+                <div class="card-action-tooltip">Add to Cart</div>
+              </li>
+              <li class="card-action-item">
+                <button class="card-action-btn">
+                  <ion-icon name="heart-outline"></ion-icon>
+                </button>
+                <div class="card-action-tooltip">Add to Wishlist</div>
+              </li>
+              <li class="card-action-item">
+                <a href="{% url 'product_detail' product.id %}" class="card-action-btn">
+                  <ion-icon name="eye-outline"></ion-icon>
+                </a>
+                <div class="card-action-tooltip">Quick View</div>
+              </li>
+            </ul>
+          </figure>
+
+          <div class="card-content">
+            <div class="card-cat">
+              <span class="card-cat-link">{{ product.category }}</span>
+            </div>
+
+            <h3 class="h3 card-title">
+              <a href="{% url 'product_detail' product.id %}">{{ product.name }}</a>
+            </h3>
+
+            <data class="card-price"> FCFA{{ product.price }}</data>
+          </div>
+
+        </div>
+      </li>
+      
+      
+    {% empty %}
+      <p>Aucun produit trouvé.</p>
+    {% endfor %}
+  </ul>
+
+  <div class="pagination" style="text-align: center; margin-top: 20px;">
+    <nav aria-label="Pagination">
+      <ul class="pagination-list">
+        {% if products.has_previous %}
+          <li><a href="?page=1">&laquo; Début</a></li>
+          <li><a href="?page={{ products.previous_page_number }}">Précédent</a></li>
+        {% else %}
+          <li><a class="disabled" aria-disabled="true">&laquo; Début</a></li>
+          <li><a class="disabled" aria-disabled="true">Précédent</a></li>
+        {% endif %}
+
+        <li><strong>Page {{ products.number }} sur {{ products.paginator.num_pages }}</strong></li>
+
+        {% if products.has_next %}
+          <li><a href="?page={{ products.next_page_number }}">Suivant</a></li>
+          <li><a href="?page={{ products.paginator.num_pages }}">Fin &raquo;</a></li>
+        {% else %}
+          <li><a class="disabled" aria-disabled="true">Suivant</a></li>
+          <li><a class="disabled" aria-disabled="true">Fin &raquo;</a></li>
+        {% endif %}
+      </ul>
+
+    </nav>
+  </div>
+{% endblock %}
+

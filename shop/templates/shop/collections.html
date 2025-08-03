@@ -1,0 +1,72 @@
+{% extends "shop/base.html" %}
+{% load static %}
+
+{% block content %}
+  <main>
+    <article>
+
+      <!-- #COLLECTION -->
+      <section class="section collection">
+        <div class="container">
+          <ul class="collection-list has-scrollbar">
+
+            <li>
+              <div class="collection-card" style="background-image: url('{% static "shop/media/images/collection-1.jpg" %}')">
+                <h3 class="h4 card-title">Men Collections</h3>
+                <a href="#" class="btn btn-secondary">
+                  <span>Explore All</span>
+                  <ion-icon name="arrow-forward-outline" aria-hidden="true"></ion-icon>
+                </a>
+              </div>
+            </li>
+
+            <!-- autres collections -->
+
+          </ul>
+        </div>
+      </section>
+
+      <!-- #SPECIAL PRODUCTS (exemple) -->
+      <section class="section special">
+        <div class="container">
+
+          <div class="special-product">
+            <h2 class="h2 section-title">
+              <span class="text">Nike Special</span>
+              <span class="line"></span>
+            </h2>
+
+            <ul class="has-scrollbar">
+              <!-- Liste des produits (tu peux passer en dynamique plus tard) -->
+              <!-- exemple produit 1 -->
+              <li class="product-item">
+                <div class="product-card" tabindex="0">
+                  <figure class="card-banner">
+                    <img src="{% static 'shop/media/images/product-1.jpg' %}" width="312" height="350" loading="lazy"
+                      alt="Running Sneaker Shoes" class="image-contain" />
+                    <!-- autres éléments ... -->
+                  </figure>
+                  <div class="card-content">
+                    <div class="card-cat">
+                      <a href="#" class="card-cat-link">Men</a> /
+                      <a href="#" class="card-cat-link">Women</a>
+                    </div>
+                    <h3 class="h3 card-title">
+                      <a href="#">Running Sneaker Shoes</a>
+                    </h3>
+                    <data class="card-price" value="180.85">$180.85</data>
+                  </div>
+                </div>
+              </li>
+
+              <!-- autres produits -->
+
+            </ul>
+          </div>
+
+        </div>
+      </section>
+
+    </article>
+  </main>
+{% endblock %}

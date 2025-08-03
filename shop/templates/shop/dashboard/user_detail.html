@@ -1,0 +1,18 @@
+{% extends 'shop/dashboard/dashboard_base.html' %}
+
+{% block content %}
+<h2>Détails de l'utilisateur</h2>
+
+<ul>
+  <li><strong>Nom d'utilisateur :</strong> {{ user.username }}</li>
+  <li><strong>Email :</strong> {{ user.email }}</li>
+  <li><strong>Prénom :</strong> {{ user.first_name }}</li>
+  <li><strong>Nom :</strong> {{ user.last_name }}</li>
+  <li><strong>Actif :</strong> {{ user.is_active }}</li>
+  <li><strong>Staff :</strong> {{ user.is_staff }}</li>
+  <li><strong>Date de création :</strong> {{ user.date_joined }}</li>
+</ul>
+
+<a href="{% url 'dashboard_user_edit' user.id %}" class="btn btn-warning">Modifier</a>
+<a href="{% url 'dashboard_users' %}" class="btn btn-secondary">Retour à la liste</a>
+{% endblock %}

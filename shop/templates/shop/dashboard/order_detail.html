@@ -1,0 +1,56 @@
+{% extends 'shop/dashboard/dashboard_base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+  <h2>Détails de la Commande #{{ order.id }}</h2>
+
+  <div class="card mb-4">
+    <div class="card-body">
+      <p><strong>Client :</strong> {{ order.user.username }}</p>
+      <p><strong>Date :</strong> {{ order.created_at }}</p>
+
+      <form method="post" action="{% url 'dashboard_update_order_status' order.id %}">
+        {% csrf_token %}
+        <div class="mb-3">
+          <label for="status" class="form-label"><strong>Statut :</strong></label>
+          <select name="status" id="status" class="form-select" onchange="this.form.submit()">
+            <option value="En attente" {% if order.status == "En attente" %}selected{% endif %}>En attente</option>
+            <option value="En cours" {% if order.status == "En cours" %}selected{% endif %}>En cours</option>
+            <option value="Livrée" {% if order.status == "Livrée" %}selected{% endif %}>Livrée</option>
+            <option value="Annulée" {% if order.status == "Annulée" %}selected{% endif %}>Annulée</option>
+          </select>
+          <small class="text-muted">Le changement est enregistré automatiquement.</small>
+        </div>
+      </form>
+
+      <p><strong>Total :</strong> {{ order.get_cart_total }} FCFA</p>
+      <p><strong>Téléphone :</strong> {{ order.phone }}</p>
+      <p><strong>Adresse :</strong> {{ order.address }}</p>
+    </div>
+  </div>
+
+  <h4>Articles :</h4>
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Produit</th>
+        <th>Quantité</th>
+        <th>Prix unitaire</th>
+        <th>Total</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for item in items %}
+      <tr>
+        <td>{{ item.product.name }}</td>
+        <td>{{ item.quantity }}</td>
+        <td>{{ item.product.price }} FCFA</td>
+        <td>{{ item.get_total }} FCFA</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <a href="{% url 'dashboard_orders' %}" class="btn btn-secondary mt-3">← Retour aux commandes</a>
+</div>
+{% endblock %}

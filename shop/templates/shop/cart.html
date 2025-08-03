@@ -1,0 +1,61 @@
+{% extends "shop/base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="cart-container">
+  <h2>🛒 Mon panier</h2>
+
+  {% if items %}
+    <!-- Formulaire pour mettre à jour les quantités -->
+    <form method="post" action="{% url 'update_cart' %}">
+      {% csrf_token %}
+      <div class="cart-items">
+        {% for item in items %}
+          <div class="cart-item-card">
+            <div class="cart-item-left">
+              {% if item.product.image %}
+                <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}">
+              {% endif %}
+              <div class="cart-item-info">
+                <h4>{{ item.product.name }}</h4>
+                <p class="price-unit">{{ item.product.price }} FCFA/unité</p>
+              </div>
+            </div>
+
+            <div class="cart-item-right">
+              <input type="number" name="quantity_{{ item.id }}" value="{{ item.quantity }}" min="0">
+              <p class="price-total">{{ item.total_price }} FCFA</p>
+              <a href="{% url 'remove_from_cart' item.id %}" class="btn remove-btn">Supprimer</a>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+
+      <!-- Résumé panier -->
+      <div class="cart-summary">
+        <h3>Total général : <span>{{ total }} FCFA</span></h3>
+
+        <!-- Boutons groupés -->
+        <div class="cart-actions">
+          <a href="{% url 'index' %}" class="btn continue-btn">← Continuer mes achats</a>
+          <button type="submit" class="btn update-btn">💾 Mettre à jour</button>
+          <a href="{% url 'clear_cart' %}" class="btn clear-btn">🗑️ Vider le panier</a>
+        </div>
+      </div>
+    </form>
+
+    <!-- Formulaire séparé pour commander -->
+    <form method="post" action="{% url 'order_checkout' %}" class="checkout-form">
+      {% csrf_token %}
+      <div class="checkout-btn-wrapper">
+        <button type="submit" class="btn btn-success btn-block">
+          ✅ Confirmer ma commande
+        </button>
+      </div>
+    </form>
+
+  {% else %}
+    <p class="empty-message">Votre panier est vide.</p>
+  {% endif %}
+</div>
+{% endblock %}

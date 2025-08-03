@@ -1,0 +1,20 @@
+{% extends "shop/base.html" %}
+
+{% block content %}
+<h2>Validation de la commande</h2>
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+
+    <button type="submit">Confirmer la commande</button>
+</form>
+
+<h3>Résumé du panier :</h3>
+<ul>
+    {% for item in cart_items %}
+        <li>{{ item.product.name }} - Quantité : {{ item.quantity }} - Prix unitaire : {{ item.product.price }}</li>
+    {% endfor %}
+</ul>
+
+{% endblock %}

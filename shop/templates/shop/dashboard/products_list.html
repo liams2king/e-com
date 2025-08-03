@@ -1,0 +1,28 @@
+{% extends 'shop/dashboard/dashboard_base.html' %}
+{% block content %}
+  <h2>Produits</h2>
+  <a href="{% url 'dashboard_product_create' %}" class="btn btn-primary">Ajouter un produit</a>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Nom</th>
+        <th>Prix</th>
+        <th>Stock</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for product in products %}
+      <tr>
+        <td>{{ product.name }}</td>
+        <td>{{ product.price }}</td>
+        <td>{{ product.stock }}</td>
+        <td>
+          <a href="{% url 'dashboard_product_update' product.id %}">Modifier</a> |
+          <a href="{% url 'dashboard_product_delete' product.id %}">Supprimer</a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

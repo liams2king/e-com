@@ -1,0 +1,16 @@
+{% extends 'shop/base.html' %}
+{% block content %}
+<div class="container my-5">
+  <h2 class="mb-4">Contactez-nous</h2>
+  {% if messages %}
+    {% for message in messages %}
+      <div class="alert alert-success">{{ message }}</div>
+    {% endfor %}
+  {% endif %}
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">Envoyer</button>
+  </form>
+</div>
+{% endblock %}

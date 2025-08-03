@@ -1,0 +1,282 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="apple-touch-icon" sizes="76x76" href="#" />
+    <link rel="icon" type="image/png" href="./img/favicon.ico" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="title" content="Ask online Form" />
+    <meta
+      name="description"
+      content="Vanchi is a Material unique admin template built with tiles concept. It comes with Different dashboard layouts, fully responsive HTML pages and, colorful widgets."
+    />
+    <meta
+      name="keywords"
+      content="mobilewebdevelopment,HTML, CSS, JavaScript,Material,js,Forum ,webdesign ,website ,web ,webdesigner ,webdevelopment,Template,admin,dashboard,ebsitedesig,themeym,radwanweb,frontend-with-radwan"
+    />
+    <meta name="robots" content="index, nofollow" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="language" content="English" />
+    <title>KmerShoes | Admin Site Responsive Template</title>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons"
+    />
+    <link rel="stylesheet" href="./css/fontawesome-all.min.css" />
+    <link href="./css/materil.css" rel="stylesheet" />
+    <link rel="stylesheet" href="{% static 'shop/css/custom.css' %}">
+    <link rel="stylesheet" href="{% static 'shop/css/responsive.css' %}">
+    <link rel="stylesheet" href="{% static 'shop/css/materil.css' %}">
+    <link rel="stylesheet" href="{% static 'shop/css/fontawesome-all.min.css' %}">
+
+    <style>
+      /* Sidebar desktop width */
+      #sidebar {
+        width: 250px;
+      }
+
+      /* Main panel margin to make room for sidebar */
+      .main-panel {
+        margin-left: 250px;
+        transition: margin-left 0.3s ease;
+      }
+
+      /* MOBILE - Sidebar hidden off canvas on left */
+      @media (max-width: 991px) {
+        #sidebar {
+          position: fixed;
+          top: 0;
+          left: 0;
+          height: 100vh;
+          width: 250px;
+          background-color: white;
+          box-shadow: 2px 0 5px rgba(227, 145, 13, 0.2);
+          z-index: 1050;
+          transform: translateX(-100%);
+          transition: transform 0.3s ease;
+          overflow-y: auto;
+        }
+
+        #sidebar.active {
+          transform: translateX(0);
+        }
+
+        /* Fond sombre derrière sidebar */
+        body.sidebar-open::before {
+          content: "";
+          position: fixed;
+          top: 0; left: 0;
+          width: 100vw;
+          height: 100vh;
+          background: rgba(0, 0, 0, 0.5);
+          z-index: 1040;
+        }
+
+        /* Empêche scroll page quand sidebar visible */
+        body.sidebar-open {
+          overflow: hidden;
+        }
+
+        /* Main panel full width */
+        .main-panel {
+          margin-left: 0 !important;
+          padding: 15px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrapper">
+      <!-- SIDEBAR -->
+      <div
+        class="sidebar"
+        id="sidebar"
+        data-color="purple"
+        data-background-color="white"
+      >
+        <div class="logo text-center py-3">
+          <a href="{% url 'dashboard' %}" class="simple-text logo-normal font-weight-bold">
+            🛍️ KmerShoes Admin
+          </a>
+        </div>
+        <div class="sidebar-wrapper">
+          <ul class="nav flex-column">
+            <li class="nav-item {% if request.path == '/admin-dashboard/dashboard' %}active{% endif %}">
+              <a class="nav-link" href="{% url 'dashboard' %}">
+                <i class="material-icons">dashboard</i>
+                <p>Tableau de bord</p>
+              </a>
+            </li>
+            <li class="nav-item {% if request.path == '/admin-dashboard/products/' %}active{% endif %}">
+              <a class="nav-link" href="{% url 'dashboard_products' %}">
+                <i class="material-icons">inventory_2</i>
+                <p>Produits</p>
+              </a>
+            </li>
+            <li class="nav-item {% if request.path == '/admin-dashboard/orders/' %}active{% endif %}">
+              <a class="nav-link" href="{% url 'dashboard_orders' %}">
+                <i class="material-icons">shopping_cart</i>
+                <p>Commandes</p>
+              </a>
+            </li>
+            <li class="nav-item {% if request.path == '/admin-dashboard/users/' %}active{% endif %}">
+              <a class="nav-link" href="{% url 'dashboard_users' %}">
+                <i class="material-icons">people</i>
+                <p>Utilisateurs</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'index' %}" target="_blank">
+                <i class="material-icons">store</i>
+                <p>Voir la boutique</p>
+              </a>
+            </li>
+            <li class="nav-item {% if '/admin-dashboard/categories/' in request.path %}active{% endif %}">
+              <a class="nav-link" href="{% url 'dashboard_categories' %}">
+                <i class="material-icons">category</i>
+                <p>Catégories</p>
+              </a>
+            </li>
+
+            <li class="nav-item">
+              <a
+                class="nav-link"
+                href="#"
+                onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
+              >
+                <i class="material-icons">logout</i>
+                <p>Déconnexion</p>
+              </a>
+              <form
+                id="logout-form"
+                method="post"
+                action="{% url 'logout' %}"
+                style="display: none;"
+              >
+                {% csrf_token %}
+              </form>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- MAIN PANEL -->
+      <div class="main-panel">
+        <!-- NAVBAR -->
+        <nav
+          class="navbar navbar-expand-lg navbar-light bg-white shadow-sm px-4 py-2"
+        >
+          <div class="container-fluid">
+            <a class="navbar-brand font-weight-bold" href="{% url 'dashboard' %}">KmerShoes Admin</a>
+
+            <!-- Bouton burger -->
+            <button
+              class="navbar-toggler"
+              id="menu-toggle"
+              type="button"
+              aria-label="Toggle navigation"
+              aria-expanded="false"
+            >
+              <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div
+              class="collapse navbar-collapse justify-content-end"
+              id="navbarDashboard"
+            >
+              <ul class="navbar-nav align-items-center">
+                <!-- Lien vers le site -->
+                <li class="nav-item mx-2">
+                  <a class="nav-link" href="{% url 'index' %}" target="_blank">
+                    <i class="fas fa-store"></i> Voir le site
+                  </a>
+                </li>
+
+                <!-- Notifications -->
+                <li class="nav-item dropdown mx-2">
+                  <a
+                    class="nav-link dropdown-toggle"
+                    href="#"
+                    id="notifDropdown"
+                    role="button"
+                    data-toggle="dropdown"
+                  >
+                    <i class="material-icons">notifications</i>
+                    <span class="badge badge-danger">5</span>
+                  </a>
+                  <div class="dropdown-menu dropdown-menu-right">
+                    <a class="dropdown-item" href="#">Nouvelle commande</a>
+                    <a class="dropdown-item" href="#">5 produits en rupture</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item text-center" href="#">Tout voir</a>
+                  </div>
+                </li>
+
+                <!-- Profil -->
+                <li class="nav-item dropdown mx-2">
+                  <a
+                    class="nav-link dropdown-toggle"
+                    href="#"
+                    id="profileDropdown"
+                    role="button"
+                    data-toggle="dropdown"
+                  >
+                    <i class="material-icons">account_circle</i> {{ request.user.username }}
+                  </a>
+                  <div class="dropdown-menu dropdown-menu-right">
+                    <a class="dropdown-item" href="#">Mon profil</a>
+                    <div class="dropdown-divider"></div>
+                    <form method="post" action="{% url 'logout' %}">
+                      {% csrf_token %}
+                      <button class="dropdown-item" type="submit">Déconnexion</button>
+                    </form>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+
+        <div class="main-content p-4">
+          {% block content %}
+          <!-- Contenu principal -->
+          {% endblock %}
+        </div>
+      </div>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const menuToggle = document.getElementById("menu-toggle");
+        const sidebar = document.getElementById("sidebar");
+        const body = document.body;
+
+        menuToggle.addEventListener("click", function (e) {
+          e.preventDefault();
+          sidebar.classList.toggle("active");
+          body.classList.toggle("sidebar-open");
+
+          // Mise à jour de aria-expanded pour accessibilité
+          const expanded = menuToggle.getAttribute("aria-expanded") === "true";
+          menuToggle.setAttribute("aria-expanded", String(!expanded));
+        });
+
+        // Fermer la sidebar si clic en dehors quand elle est ouverte
+        body.addEventListener("click", function (e) {
+          if (
+            body.classList.contains("sidebar-open") &&
+            !sidebar.contains(e.target) &&
+            e.target !== menuToggle
+          ) {
+            sidebar.classList.remove("active");
+            body.classList.remove("sidebar-open");
+            menuToggle.setAttribute("aria-expanded", "false");
+          }
+        });
+      });
+    </script>
+  </body>
+</html>

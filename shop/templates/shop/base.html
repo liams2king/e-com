@@ -1,0 +1,432 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>KmerShoes store - e-commerce</title>
+
+  <!-- favicon -->
+  <link rel="shortcut icon" href="{% static 'shop/favicon.svg' %}" type="image/svg+xml" />
+
+  <!-- custom css -->
+  <link rel="stylesheet" href="{% static 'shop/css/product_detail.css' %}">
+  <link rel="stylesheet" href="{% static 'shop/css/style.css' %}" />
+  <link rel="stylesheet" href="{% static 'shop/css/cart.css' %}">
+  <link rel="stylesheet" href="{% static 'shop/css/user-dropdown.css' %}">
+  <link rel="stylesheet" href="{% static 'shop/css/register.css' %}">
+   <link rel="stylesheet" href="{% static 'shop/css/login.css' %}">
+  
+
+
+  <!-- google fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400;500;600;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet" />
+
+  <!-- preload hero banner image -->
+  <link rel="preload" href="{% static 'shop/media/images/hero-banner.png' %}" as="image" />
+</head>
+
+<body id="top">
+
+  <!-- HEADER -->
+  <header class="header" data-header>
+    <div class="container">
+      <div class="overlay" data-overlay></div>
+
+      <a href="#" class="logo">KmerShoes<span>Store</span></a>
+
+
+      <button class="nav-open-btn" data-nav-open-btn aria-label="Open Menu">
+        <ion-icon name="menu-outline"></ion-icon>
+      </button>
+
+      <nav class="navbar" data-navbar>
+
+        <button class="nav-close-btn" data-nav-close-btn aria-label="Close Menu">
+          <ion-icon name="close-outline"></ion-icon>
+        </button>
+
+        <a href="#" class="logo">KmerShoes<span>Store</span></a>
+
+        <ul class="navbar-list">
+          <li class="navbar-item"><a href="{% url 'index' %}" class="navbar-link">Home</a></li>
+          <li class="navbar-item"><a href="{% url 'about' %}" class="navbar-link">About</a></li>
+          <li class="navbar-item"><a href="{% url 'products' %}" class="navbar-link">Products</a></li>
+          <li><a href="{% url 'collections' %}">Collections</a></li>
+          <li class="navbar-item"><a href="{% url 'products' %}" class="navbar-link">Shop</a></li>
+          <li class="navbar-item"><a href="#" class="navbar-link">Blog</a></li>
+          <li class="navbar-item"><a href="{% url 'contact' %}" class="navbar-link">Contact</a></li>
+          
+        </ul>
+
+        <ul class="nav-action-list">
+        
+        <!-- Bouton de recherche -->
+        <li>
+          <button class="nav-action-btn" id="search-toggle">
+            <ion-icon name="search-outline" aria-hidden="true"></ion-icon>
+            <span class="nav-action-text">Search</span>
+          </button>
+        </li>
+
+        <!-- Formulaire de recherche caché -->
+        <li id="search-form-container" class="hidden">
+          <form action="{% url 'index' %}" method="get" class="search-form">
+            <input type="text" name="item_name" placeholder="Rechercher un produit..." />
+            <button type="submit">
+              <ion-icon name="search"></ion-icon>
+            </button>
+          </form>
+        </li>
+
+
+
+          
+          <li class="nav-item dropdown">
+            <button class="nav-action-btn" id="user-dropdown-toggle">
+              <ion-icon name="person-outline" aria-hidden="true"></ion-icon>
+              <span class="nav-action-text">
+                {% if user.is_authenticated %}
+                  {{ user.username }}
+                {% else %}
+                  Login / Register
+                {% endif %}
+              </span>
+            </button>
+
+            <ul class="dropdown-menu hidden" id="user-dropdown">
+              {% if user.is_authenticated %}
+                <li>
+                  <form id="logout-form" action="{% url 'logout' %}" method="post" style="display:none;">
+                    {% csrf_token %}
+                  </form>
+                  <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                    Déconnexion
+                  </a>
+                </li>
+              {% else %}
+                <li><a href="{% url 'login' %}">Connexion</a></li>
+                <li><a href="{% url 'register' %}">Inscription</a></li>
+              {% endif %}
+            </ul>
+          </li>
+
+
+
+          <li>
+            <a href="{% url 'wishlist_view' %}" class="nav-action-btn">
+              <ion-icon name="heart-outline" aria-hidden="true"></ion-icon>
+              <data class="nav-action-text" value="{{ total_wishlist_items }}">
+                Wishlist: <strong>{{ total_wishlist_items }}</strong>
+              </data>
+              <data class="nav-action-badge" value="{{ total_wishlist_items }}" aria-hidden="true">
+                {{ total_wishlist_items }}
+              </data>
+            </a>
+          <li>
+            <a href="{% url 'cart_view' %}" class="nav-action-btn">
+              <ion-icon name="bag-outline" aria-hidden="true"></ion-icon>
+              <data class="nav-action-text" value="{{ total_cart_price }}">
+                Basket: <strong>${{ total_cart_price|floatformat:2 }}</strong>
+              </data>
+              <data class="nav-action-badge" value="{{ total_cart_quantity }}" aria-hidden="true">
+                {{ total_cart_quantity }}
+              </data>
+            </a>
+          </li>
+
+          {% if request.user.is_authenticated and request.user.is_staff %}
+            <li>
+              <a href="{% url 'dashboard_home' %}" class="nav-action-btn">
+                <ion-icon name="speedometer-outline" aria-hidden="true"></ion-icon>
+                <span class="nav-action-text">Dashboard</span>
+              </a>
+            </li>
+          {% endif %}
+
+        </ul>
+
+      </nav>
+    </div>
+  </header>
+
+  {% block content %}{% endblock %}
+
+<<!-- FOOTER -->
+ <footer class="footer">
+
+    <div class="footer-top section">
+      <div class="container">
+
+        <div class="footer-brand">
+
+         <a href="#" class="logo">KmerShoes<span>Store</span></a>
+
+
+          <ul class="social-list">
+
+            <li>
+              <a href="#" class="social-link">
+                <ion-icon name="logo-facebook"></ion-icon>
+              </a>
+            </li>
+
+            <li>
+              <a href="#" class="social-link">
+                <ion-icon name="logo-twitter"></ion-icon>
+              </a>
+            </li>
+
+            <li>
+              <a href="#" class="social-link">
+                <ion-icon name="logo-pinterest"></ion-icon>
+              </a>
+            </li>
+
+            <li>
+              <a href="#" class="social-link">
+                <ion-icon name="logo-linkedin"></ion-icon>
+              </a>
+            </li>
+
+          </ul>
+
+        </div>
+
+        <div class="footer-link-box">
+
+          <ul class="footer-list">
+
+            <li>
+              <p class="footer-list-title">Contactez-nous</p>
+            </li>
+
+            <li>
+              <address class="footer-link">
+                <ion-icon name="location"></ion-icon>
+
+                <span class="footer-link-text">
+                  Adresse : KmerShoes StoreRue Bastos, Immeuble Prestige 2ᵉ étageYaoundé, Cameroun
+                </span>
+              </address>
+            </li>
+
+            <li>
+              <a href="tel:+557343673257" class="footer-link">
+                <ion-icon name="call"></ion-icon>
+
+                <span class="footer-link-text"> +237 6 99 99 99 99</span>
+              </a>
+            </li>
+
+            <li>
+              <a href="mailto:footcap@help.com" class="footer-link">
+                <ion-icon name="mail"></ion-icon>
+
+                <span class="footer-link-text">contact@kmershoes.com</span>
+              </a>
+            </li>
+
+          </ul>
+
+          <ul class="footer-list">
+
+            <li>
+              <p class="footer-list-title">Mon Compte</p>
+            </li>
+
+            <li>
+              <a href="#" class="footer-link">
+                <ion-icon name="chevron-forward-outline"></ion-icon>
+
+                <span class="footer-link-text">Mon Compte</span>
+              </a>
+            </li>
+
+            <li>
+              <a href="#" class="footer-link">
+                <ion-icon name="chevron-forward-outline"></ion-icon>
+
+                <span class="footer-link-text">Voir le panier</span>
+              </a>
+            </li>
+
+            <li>
+              <a href="#" class="footer-link">
+                <ion-icon name="chevron-forward-outline"></ion-icon>
+
+                <span class="footer-link-text">Liste de souhaits</span>
+              </a>
+            </li>
+
+            <li>
+              <a href="#" class="footer-link">
+                <ion-icon name="chevron-forward-outline"></ion-icon>
+
+                <span class="footer-link-text">Comparer</span>
+              </a>
+            </li>
+
+            <li>
+              <a href="#" class="footer-link">
+                <ion-icon name="chevron-forward-outline"></ion-icon>
+
+                <span class="footer-link-text">Nouveaux Produits</span>
+              </a>
+            </li>
+
+          </ul>
+
+          <div class="footer-list">
+
+            <p class="footer-list-title">Heures d'ouverture</p>
+
+            <table class="footer-table">
+              <tbody>
+
+                <tr class="table-row">
+                  <th class="table-head" scope="row">Lun - Mar:</th>
+
+                  <td class="table-data">8h - 22h</td>
+                </tr>
+
+                <tr class="table-row">
+                  <th class="table-head" scope="row">Mercredi:</th>
+
+                  <td class="table-data">8h - 19h</td>
+                </tr>
+
+                <tr class="table-row">
+                  <th class="table-head" scope="row">Vendredi:</th>
+
+                  <td class="table-data">7h - 12h</td>
+                </tr>
+
+                <tr class="table-row">
+                  <th class="table-head" scope="row">Samedi :</th>
+
+                  <td class="table-data">9h - 20h</td>
+                </tr>
+
+                <tr class="table-row">
+                  <th class="table-head" scope="row">Dimanche:</th>
+
+                  <td class="table-data">fermée</td>
+                </tr>
+
+              </tbody>
+            </table>
+
+          </div>
+
+          <div class="footer-list">
+
+            <p class="footer-list-title">Bulletin d'information</p>
+
+            <p class="newsletter-text">
+              Transformez de manière autoritaire les potentialités 24/7 avec des partenariats sans erreur.
+            </p>
+
+            <form action="" class="newsletter-form">
+              <input type="email" name="email" required placeholder="Email Address" class="newsletter-input">
+
+              <button type="submit" class="btn btn-primary">Abonnez-vous</button>
+            </form>
+
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div class="container">
+
+        <p class="copyright">
+          &copy; 2025 <a href="#" class="copyright-link">codeavecSadee</a>. Tous droits réservés
+        </p>
+
+      </div>
+    </div>
+
+  </footer>
+
+
+
+
+  <!-- GO TO TOP -->
+  <a href="#top" class="go-top-btn" data-go-top>
+    <ion-icon name="arrow-up-outline"></ion-icon>
+  </a>
+
+
+<script>
+  function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+      const cookies = document.cookie.split(';');
+      for (const cookie of cookies) {
+        const c = cookie.trim();
+        if (c.startsWith(name + '=')) {
+          cookieValue = decodeURIComponent(c.substring(name.length + 1));
+          break;
+        }
+      }
+    }
+    return cookieValue;
+  }
+
+  document.querySelectorAll('.wishlist-btn').forEach(button => {
+    button.addEventListener('click', function() {
+      if (!{{ user.is_authenticated|yesno:"true,false" }}) {
+        alert('Veuillez vous connecter pour ajouter à la wishlist.');
+        return;
+      }
+
+      const productId = this.dataset.productId;
+      fetch(`/product/${productId}/toggle_wishlist/`, {
+        method: 'POST',
+        headers: {
+          'X-CSRFToken': getCookie('csrftoken'),
+          'Content-Type': 'application/json'
+        },
+        credentials: 'same-origin'
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.liked) {
+          this.querySelector('ion-icon').setAttribute('name', 'heart');
+          this.querySelector('ion-icon').style.color = 'red';
+        } else {
+          this.querySelector('ion-icon').setAttribute('name', 'heart-outline');
+          this.querySelector('ion-icon').style.color = '';
+        }
+        // Optionnel : mettre à jour un compteur global ou badge ici
+      })
+      .catch(console.error);
+    });
+  });
+  </script>
+
+
+  <!-- custom js -->
+  <script src="{% static 'shop/js/script.js' %}"></script>
+  <script src="{% static 'shop/js/search-toggle.js' %}"></script>
+  <script src="{% static 'shop/js/auto-alert.js' %}"></script>
+  <script src="{% static 'shop/js/user-dropdown.js' %}"></script>
+  <!-- ionicon links -->
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+
+
+
+</body>
+
+</html>

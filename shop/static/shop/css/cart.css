@@ -1,0 +1,148 @@
+.cart-container {
+  max-width: 900px;
+  margin: 30px auto;
+  padding: 20px;
+}
+
+.cart-header {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 20px;
+}
+
+.cart-items {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.cart-item-card {
+  display: flex;
+  justify-content: space-between;
+  border: 1px solid #ddd;
+  padding: 15px;
+  border-radius: 10px;
+  align-items: center;
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.cart-item-left {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.cart-item-left img {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.cart-item-info h4 {
+  margin: 0;
+  font-size: 18px;
+}
+
+.price-unit {
+  color: #888;
+  font-size: 14px;
+}
+
+.cart-item-right {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.cart-item-right input {
+  width: 60px;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.price-total {
+  font-weight: bold;
+  color: #27ae60;
+}
+
+.cart-summary {
+  margin-top: 40px;
+  text-align: right;
+}
+
+.cart-summary h3 span {
+  color: #27ae60;
+}
+
+.cart-actions {
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;
+}
+
+.btn {
+  padding: 10px 16px;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  font-weight: bold;
+  transition: 0.3s ease;
+}
+
+.clear-btn {
+  background-color: #e74c3c;
+  color: white;
+}
+
+.update-btn {
+  background-color: #3498db;
+  color: white;
+}
+
+.continue-btn {
+  background-color: #2ecc71;
+  color: white;
+}
+
+.remove-btn {
+  background-color: #e74c3c;
+  color: white;
+  font-size: 14px;
+}
+
+.btn:hover {
+  opacity: 0.85;
+}
+
+.empty-message {
+  text-align: center;
+  font-size: 18px;
+  padding: 40px 0;
+  color: #888;
+}
+
+
+.card img {
+  border-top-left-radius: 0.5rem;
+  border-top-right-radius: 0.5rem;
+}
+
+.card .btn {
+  font-weight: 500;
+  transition: 0.3s ease;
+}
+
+.card .btn:hover {
+  opacity: 0.9;
+}
+
+@media (max-width: 576px) {
+  .card-body input[type="number"] {
+    width: 100% !important;
+  }
+}

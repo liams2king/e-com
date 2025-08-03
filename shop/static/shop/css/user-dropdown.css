@@ -1,0 +1,28 @@
+.dropdown-menu {
+  background-color: white;
+  border: 1px solid #ccc;
+  position: absolute;
+  z-index: 1000;
+  list-style: none;
+  padding: 10px;
+  border-radius: 5px;
+  display: none;
+}
+
+.dropdown-menu li {
+  padding: 5px 10px;
+}
+
+.dropdown-menu li a {
+  text-decoration: none;
+  color: #333;
+}
+
+.dropdown-menu li a:hover {
+  color: #007bff;
+}
+
+/* Classe pour afficher le menu */
+.dropdown-menu.show {
+  display: block;
+}

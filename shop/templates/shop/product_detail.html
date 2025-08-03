@@ -1,0 +1,33 @@
+{% extends 'shop/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="product-detail-container">
+  
+  <div class="product-detail-image">
+    <img src="{{ product.image.url }}" alt="{{ product.name }}" class="img-fluid" style="width: 100%; border-radius: 10px;">
+  </div>
+
+  <div class="product-detail-info">
+    <h2 class="product-detail-title">{{ product.name }}</h2>
+    <p class="text-muted">{{ product.category }}</p>
+    <h4 class="product-detail-price">{{ product.price }}  FCFA</h4>
+
+    {% if product.description %}
+      <p class="product-detail-description">{{ product.description }}</p>
+    {% else %}
+      <p class="text-muted">Pas de description disponible.</p>
+    {% endif %}
+
+    <div class="product-detail-actions">
+      <a href="{% url 'add_to_cart' product.id %}">
+        <ion-icon name="cart-outline"></ion-icon> Ajouter au panier
+      </a>
+      <a href="{% url 'index' %}" style="background-color: #6c757d; margin-left: 10px;">
+        ← Retour
+      </a>
+    </div>
+  </div>
+
+</div>
+{% endblock %}

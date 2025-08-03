@@ -1,0 +1,41 @@
+{% extends "shop/base.html" %}
+{% load static %}
+
+{% block content %}
+  <section class="section">
+    <div class="container">
+      <h2 class="h2 section-title">Résultats pour "{{ query }}"</h2>
+
+      {% if products %}
+        <ul class="product-list">
+          {% for product in products %}
+            <li class="product-item">
+              <!-- Ton code HTML produit ici -->
+              {{ product.name }} - {{ product.price }}
+              <!-- ... -->
+            </li>
+          {% endfor %}
+        </ul>
+
+        <div class="pagination">
+          <ul class="pagination-list">
+            {% if products.has_previous %}
+              <li><a href="?item_name={{ query }}&page=1">&laquo; Début</a></li>
+              <li><a href="?item_name={{ query }}&page={{ products.previous_page_number }}">Précédent</a></li>
+            {% endif %}
+
+            <li><strong>Page {{ products.number }} sur {{ products.paginator.num_pages }}</strong></li>
+
+            {% if products.has_next %}
+              <li><a href="?item_name={{ query }}&page={{ products.next_page_number }}">Suivant</a></li>
+              <li><a href="?item_name={{ query }}&page={{ products.paginator.num_pages }}">Fin &raquo;</a></li>
+            {% endif %}
+          </ul>
+        </div>
+
+      {% else %}
+        <p>Aucun produit trouvé pour "{{ query }}".</p>
+      {% endif %}
+    </div>
+  </section>
+{% endblock %}

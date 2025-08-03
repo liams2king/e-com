@@ -1,0 +1,14 @@
+{% extends 'shop/dashboard/dashboard_base.html' %}
+{% block content %}
+<h2>Formulaire Produit</h2>
+<form method="post" enctype="multipart/form-data">
+  {% csrf_token %}
+  {{ form.as_p }}
+   <a href="{% url 'dashboard_categories_add' %}" class="btn btn-sm btn-success">➕ Ajouter une catégorie</a>
+  <button type="submit" class="btn btn-success">Enregistrer</button>
+</form>
+
+
+{% endblock %}
+
+

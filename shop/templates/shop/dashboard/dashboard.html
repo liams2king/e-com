@@ -1,0 +1,172 @@
+{% extends 'shop/dashboard/dashboard_base.html' %}
+
+{% block content %}
+<h2 class="mb-4">Tableau de bord</h2>
+
+<div class="row">
+  <div class="col-md-3 mb-3">
+    <div class="card text-white bg-primary shadow-sm">
+      <div class="card-body">
+        <div class="d-flex justify-content-between align-items-center">
+          <div>
+            <h5 class="card-title">Produits</h5>
+            <h3>{{ total_products }}</h3>
+          </div>
+          <i class="bi bi-box-seam display-4"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3 mb-3">
+    <div class="card text-white bg-success shadow-sm">
+      <div class="card-body">
+        <div class="d-flex justify-content-between align-items-center">
+          <div>
+            <h5 class="card-title">Commandes</h5>
+            <h3>{{ total_orders }}</h3>
+          </div>
+          <i class="bi bi-cart-check display-4"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3 mb-3">
+    <div class="card text-white bg-info shadow-sm">
+      <div class="card-body">
+        <div class="d-flex justify-content-between align-items-center">
+          <div>
+            <h5 class="card-title">Utilisateurs</h5>
+            <h3>{{ total_users }}</h3>
+          </div>
+          <i class="bi bi-people display-4"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3 mb-3">
+    <div class="card text-white bg-warning shadow-sm">
+      <div class="card-body">
+        <div class="d-flex justify-content-between align-items-center">
+          <div>
+            <h5 class="card-title">Chiffre d'affaires</h5>
+            <h3>{{ total_revenue|floatformat:2 }} FCFA</h3>
+          </div>
+          <i class="bi bi-currency-exchange display-4"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row mt-4">
+  <div class="col-md-4 mb-4">
+    <div class="card border-left-danger shadow-sm h-100 py-2">
+      <div class="card-body">
+        <h6 class="text-danger">Commandes livrées</h6>
+        <h4>{{ delivered_orders }}</h4>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4 mb-4">
+    <div class="card border-left-dark shadow-sm h-100 py-2">
+      <div class="card-body">
+        <h6 class="text-dark">Produits en rupture</h6>
+        <h4>{{ out_of_stock }}</h4>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4 mb-4">
+    <div class="card border-left-secondary shadow-sm h-100 py-2">
+      <div class="card-body">
+        <h6 class="text-muted">Panier moyen</h6>
+        <h4>{{ average_cart|floatformat:2 }} FCFA</h4>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Graphique des commandes sur 7 jours -->
+<div class="card mb-4 p-3 shadow-sm">
+  <h5>Commandes sur les 7 derniers jours</h5>
+  <canvas id="ordersChart" height="100"></canvas>
+</div>
+
+<div class="card mb-4 p-3 shadow-sm">
+  <h5>Produits les plus aimés ❤️</h5>
+  <ul class="list-group list-group-flush">
+    {% for product in most_liked_products %}
+      <li class="list-group-item d-flex justify-content-between align-items-center">
+        <span>{{ product.name }}</span>
+        <span class="badge bg-danger rounded-pill">{{ product.like_count }} ❤️</span>
+      </li>
+    {% empty %}
+      <li class="list-group-item">Aucun produit aimé pour le moment.</li>
+    {% endfor %}
+  </ul>
+</div>
+
+<!-- Graphique camembert des statuts de commande -->
+<div class="card mb-4 p-3 shadow-sm">
+  <h5>Répartition des statuts de commande</h5>
+  <canvas id="ordersStatusChart" height="150"></canvas>
+</div>
+
+
+
+
+<!-- Chart.js CDN -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+  // Graphique lignes
+  const ordersCtx = document.getElementById('ordersChart').getContext('2d');
+  const ordersChart = new Chart(ordersCtx, {
+    type: 'line',
+    data: {
+      labels: {{ chart_labels|safe }},
+      datasets: [{
+        label: 'Commandes par jour',
+        data: {{ chart_data|safe }},
+        backgroundColor: 'rgba(0, 123, 255, 0.2)',
+        borderColor: 'rgba(0, 123, 255, 1)',
+        borderWidth: 2,
+        tension: 0.4,
+        fill: true
+      }]
+    },
+    options: {
+      responsive: true,
+      scales: {
+        y: {
+          beginAtZero: true,
+          ticks: {
+            stepSize: 1
+          }
+        }
+      }
+    }
+  });
+
+  // Graphique camembert
+  const statusCtx = document.getElementById('ordersStatusChart').getContext('2d');
+  const statusChart = new Chart(statusCtx, {
+    type: 'pie',
+    data: {
+      labels: {{ status_labels|safe }},
+      datasets: [{
+        data: {{ status_data|safe }},
+        backgroundColor: [
+          '#28a745',
+          '#ffc107',
+          '#dc3545',
+          '#17a2b8'
+        ]
+      }]
+    },
+    options: {
+      responsive: true
+    }
+  });
+</script>
+
+{% endblock %}

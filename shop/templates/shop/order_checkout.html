@@ -1,0 +1,159 @@
+{% extends 'shop/base.html' %}
+{% load static %}
+{% block content %}
+
+<style>
+  .checkout-container {
+    max-width: 480px;
+    margin: 50px auto;
+    padding: 30px 35px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+
+  .checkout-container h2 {
+    text-align: center;
+    color: #b33600;
+    margin-bottom: 30px;
+    font-weight: 700;
+    letter-spacing: 1px;
+  }
+
+  form .form-group {
+    margin-bottom: 22px;
+  }
+
+  form label {
+    display: block;
+    font-weight: 600;
+    color: #444;
+    margin-bottom: 6px;
+    font-size: 15px;
+  }
+
+  form input[type="text"],
+  form input[type="email"],
+  form select {
+    width: 100%;
+    padding: 12px 15px;
+    font-size: 15px;
+    border: 1.8px solid #ddd;
+    border-radius: 8px;
+    transition: border-color 0.3s ease;
+  }
+
+  form input[type="text"]:focus,
+  form input[type="email"]:focus,
+  form select:focus {
+    border-color: #b33600;
+    outline: none;
+    box-shadow: 0 0 6px #b33600a1;
+  }
+
+  /* Styles boutons radios */
+  .form-group .radio {
+    margin-top: 6px;
+    display: flex;
+    gap: 18px;
+  }
+
+  .form-group .radio label {
+    font-weight: 500;
+    cursor: pointer;
+    color: #555;
+  }
+
+  .form-group .radio input[type="radio"] {
+    margin-right: 8px;
+    cursor: pointer;
+  }
+
+  .submit-btn {
+    width: 100%;
+    padding: 14px 0;
+    background-color: #b33600;
+    border: none;
+    border-radius: 8px;
+    color: white;
+    font-weight: 700;
+    font-size: 17px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    letter-spacing: 0.7px;
+  }
+
+  .submit-btn:hover {
+    background-color: #8a2600;
+  }
+
+  /* Messages Django */
+  ul.messages {
+    list-style: none;
+    padding-left: 0;
+    margin-bottom: 25px;
+  }
+  ul.messages li {
+    background-color: #ffefef;
+    border-left: 5px solid #b33600;
+    color: #b33600;
+    padding: 12px 15px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    font-weight: 600;
+  }
+</style>
+
+<div class="checkout-container">
+    <h2>Finaliser votre commande</h2>
+
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+            <li class="{{ message.tags }}">{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+
+    <form method="post">
+        {% csrf_token %}
+        {{ form.non_field_errors }}
+
+        <div class="form-group">
+            {{ form.full_name.label_tag }}
+            {{ form.full_name }}
+            {{ form.full_name.errors }}
+        </div>
+
+        <div class="form-group">
+            {{ form.email.label_tag }}
+            {{ form.email }}
+            {{ form.email.errors }}
+        </div>
+
+        <div class="form-group">
+            {{ form.phone.label_tag }}
+            {{ form.phone }}
+            {{ form.phone.errors }}
+        </div>
+
+        <div class="form-group">
+            {{ form.address.label_tag }}
+            {{ form.address }}
+            {{ form.address.errors }}
+        </div>
+
+        <div class="form-group">
+            {{ form.payment_method.label_tag }}
+            <div class="radio">
+              {{ form.payment_method }}
+            </div>
+            {{ form.payment_method.errors }}
+        </div>
+
+        <button type="submit" class="submit-btn">Valider la commande</button>
+    </form>
+</div>
+
+{% endblock %}

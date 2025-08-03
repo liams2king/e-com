@@ -1,0 +1,76 @@
+{% extends 'shop/base.html' %}
+
+{% block content %}
+<style>
+  .about-section {
+    padding: 50px 20px;
+    background-color: #f9f9f9;
+    font-family: 'Segoe UI', sans-serif;
+    color: #333;
+  }
+
+  .about-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    background: #fff;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  }
+
+  .about-container h2 {
+    font-size: 36px;
+    margin-bottom: 20px;
+    color: #2b2b2b;
+    border-left: 5px solid #007bff;
+    padding-left: 15px;
+  }
+
+  .about-container p {
+    line-height: 1.8;
+    font-size: 17px;
+    margin-bottom: 15px;
+  }
+
+  @media (max-width: 768px) {
+    .about-container {
+      padding: 20px;
+    }
+
+    .about-container h2 {
+      font-size: 28px;
+    }
+
+    .about-container p {
+      font-size: 15px;
+    }
+  }
+</style>
+
+<section class="about-section">
+  <div class="about-container">
+    <h2>À propos de KmerShoes Store</h2>
+    <p>Bienvenue chez <strong>KmerShoes Store</strong>, votre destination incontournable pour les chaussures tendance, confortables et de qualité supérieure. Fondée avec la passion de fournir à nos clients des produits alliant style, durabilité et prix accessibles, KmerShoes Store s’est rapidement imposée comme une référence dans le monde de la chaussure au Cameroun et au-delà.</p>
+
+    <p><strong>Notre mission</strong><br>
+    Offrir à chaque client la paire de chaussures parfaite qui saura sublimer son style tout en assurant un confort optimal. Chaque pas compte, et nous vous accompagnons dans toutes vos aventures : professionnelles, sportives ou décontractées.</p>
+
+    <p><strong>Notre engagement qualité</strong><br>
+    Nous sélectionnons rigoureusement nos collections auprès de fabricants et de marques reconnues pour leur savoir-faire et leur exigence de qualité. Chaque modèle est testé pour sa robustesse, sa finition et son confort.</p>
+
+    <p><strong>Une large gamme pour tous les goûts</strong><br>
+    Que vous recherchiez des baskets tendances, des chaussures habillées, des sandales ou des modèles sportifs, nous vous proposons un vaste choix renouvelé régulièrement selon les dernières tendances de la mode.</p>
+
+    <p><strong>Un service client dédié</strong><br>
+    Notre équipe est toujours à votre écoute pour vous conseiller, répondre à vos questions et vous offrir une expérience d’achat fluide et personnalisée.</p>
+
+    <p><strong>Livraison rapide et sécurisée</strong><br>
+    Nous livrons partout au Cameroun avec un système fiable, rapide et traçable. Notre service après-vente est disponible pour toute demande ou échange.</p>
+
+    <p><strong>Notre vision</strong><br>
+    Nous visons à devenir le leader de la vente de chaussures en ligne en Afrique centrale. KmerShoes Store s’engage aussi pour une démarche responsable en soutenant des initiatives locales et en privilégiant des produits respectueux de l’environnement.</p>
+
+    <p><em>Merci de faire confiance à KmerShoes Store. Nous sommes impatients de vous accompagner à chaque pas de votre vie avec élégance et confort !</em></p>
+  </div>
+</section>
+{% endblock %}

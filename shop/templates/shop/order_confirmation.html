@@ -1,0 +1,122 @@
+{% extends "shop/base.html" %}
+{% block content %}
+<style>
+  .order-summary {
+    max-width: 600px;
+    margin: 40px auto 20px;
+    padding: 20px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+
+  .order-summary h2 {
+    color: #b33600;
+    margin-bottom: 15px;
+  }
+
+  .order-summary table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+  }
+
+  .order-summary th, .order-summary td {
+    border-bottom: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+  }
+
+  .order-summary th {
+    background-color: #f7f7f7;
+  }
+
+  .order-summary .total {
+    font-weight: 700;
+    font-size: 1.2rem;
+    text-align: right;
+  }
+
+  .button-container {
+    display: flex;
+    justify-content: flex-start;
+    gap: 10px;
+  }
+
+  .btn-confirm {
+    background-color: #b33600;
+    color: white;
+    padding: 12px 30px;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  .btn-confirm:hover {
+    background-color: #8a2600;
+  }
+
+  .btn-return {
+    display: inline-block;
+    background-color: #ccc;
+    color: black;
+    padding: 12px 30px;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+  }
+
+  .btn-return:hover {
+    background-color: #aaa;
+  }
+</style>
+
+<div class="order-summary">
+  <h2>Résumé de votre commande</h2>
+
+  <p><strong>Numéro de suivi :</strong> {{ order.tracking_number }}</p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Produit</th>
+        <th>Quantité</th>
+        <th>Prix unitaire</th>
+        <th>Sous-total</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for item in items %}
+      <tr>
+        <td>{{ item.product.name }}</td>
+        <td>{{ item.quantity }}</td>
+        <td>{{ item.product.price|floatformat:2 }}  FCFA</td>
+        <td>{{ item.subtotal|floatformat:2 }}  FCFA</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <p class="total">Total : {{ total_price|floatformat:2 }} F</p>
+
+  <form method="post" onsubmit="return confirmOrder();">
+    {% csrf_token %}
+    <div class="button-container">
+      <button type="submit" class="btn-confirm">Confirmer la commande</button>
+      <a href="{% url 'cart_view' %}" class="btn-return">Revenir au panier</a>
+    </div>
+  </form>
+</div>
+
+<script>
+  function confirmOrder() {
+    return confirm("Es-tu sûr de vouloir confirmer cette commande ?");
+  }
+</script>
+{% endblock %}
+

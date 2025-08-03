@@ -1,0 +1,49 @@
+{% extends "shop/base.html" %}
+{% block content %}
+<style>
+  .confirmation-container {
+    max-width: 600px;
+    margin: 60px auto;
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 30px;
+    text-align: center;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+    font-family: 'Segoe UI', sans-serif;
+  }
+
+  .confirmation-container h2 {
+    color: #28a745;
+    margin-bottom: 10px;
+  }
+
+  .confirmation-container p {
+    font-size: 1.1rem;
+    margin-bottom: 20px;
+  }
+
+  .confirmation-container .redirect {
+    color: #777;
+    font-size: 0.95rem;
+  }
+
+  .confirmation-container a {
+    color: #b33600;
+    text-decoration: underline;
+    font-weight: bold;
+  }
+</style>
+
+<div class="confirmation-container">
+  <h2>✅ Commande confirmée</h2>
+  <p>Merci pour votre achat ! Votre commande a bien été enregistrée.</p>
+  <p class="redirect">Vous serez redirigé automatiquement vers l'accueil dans 5 secondes...</p>
+  <p><a href="{% url 'index' %}">Retour immédiat à l'accueil</a></p>
+</div>
+
+<script>
+  setTimeout(function() {
+    window.location.href = "{% url 'index' %}";
+  }, 5000);
+</script>
+{% endblock %}
