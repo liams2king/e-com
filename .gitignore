@@ -1,0 +1,31 @@
+# Environnement Python
+env/
+venv/
+ENV/
+*.pyc
+__pycache__/
+
+# Fichiers Django sensibles
+*.log
+*.pot
+*.pyc
+*.pyo
+*.sqlite3
+*.db
+
+# Fichier de configuration des variables d’environnement
+.env
+
+# Dossiers générés automatiquement
+/staticfiles/
+/media/
+
+# Fichiers de l'IDE (VSCode, PyCharm, etc.)
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Système d’exploitation
+.DS_Store
+Thumbs.db
